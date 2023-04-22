@@ -12,7 +12,6 @@
 #define APPHEIGHT 600
 #define SELECTION_TOLERANCE 2.5
 
-
 using namespace std;
 
 int mousePosition[2] = {0, 0};
@@ -25,14 +24,31 @@ void mouseSelection(int x, int y)
     glClear(GL_COLOR_BUFFER_BIT);
 
     glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    //Area
     glBegin(GL_QUADS);
-        glColor4f(100, 100, 100, 50);
+        glColor4f(0, 0.41, .84, 0.1);
         glVertex2f(a, b);
         glVertex2f(a, y);
         glVertex2f(x, y);
         glVertex2f(x, b);
     glEnd();
+
     glDisable(GL_BLEND);
+
+    //Border
+    glBegin(GL_LINE_LOOP);
+        glVertex2f(a, b);
+        glVertex2f(a, y);
+
+        glVertex2f(a, y);
+        glVertex2f(x, y);
+
+        glVertex2f(x, y);
+        glVertex2f(x, b);
+    glEnd();
+
     glutSwapBuffers();
 }
 
@@ -45,8 +61,6 @@ void mouse(int button, int state, int x, int y)
             {
                 mousePosition[0] = x;
                 mousePosition[1] = y;
-
-                cout << x << " " << y << '\n';
 
                 //future: Add point
                  glBegin(GL_QUADS);
@@ -81,29 +95,7 @@ void display()
     glClear(GL_COLOR_BUFFER_BIT);
 
     glBegin(GL_QUADS);
-        glColor3f(100, 100, 100);
-        glVertex2f(-10, -10);
-        glVertex2f(10, -10);
-        glVertex2f(10, 10);
-        glVertex2f(-10, 10);
 
-        glColor3f(100, 0, 0);
-        glVertex2f(-10, APPHEIGHT-10);
-        glVertex2f(10, APPHEIGHT-10);
-        glVertex2f(10, APPHEIGHT+10);
-        glVertex2f(-10, APPHEIGHT+10);
-
-        glColor3f(0, 100, 0);
-        glVertex2f(APPWIDTH-10, -10);
-        glVertex2f(APPWIDTH+10, -10);
-        glVertex2f(APPWIDTH+10, 10);
-        glVertex2f(APPWIDTH-10, 10);
-
-        glColor3f(0, 0, 100);
-        glVertex2f(APPWIDTH-10, APPHEIGHT-10);
-        glVertex2f(APPWIDTH+10, APPHEIGHT-10);
-        glVertex2f(APPWIDTH+10, APPHEIGHT+10);
-        glVertex2f(APPWIDTH-10, APPHEIGHT+10);
     glEnd();
 
     glutSwapBuffers();
