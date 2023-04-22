@@ -3,7 +3,10 @@
 
 #include <string>
 
-typedef void (* callback)(void);
+typedef void (* Callback)(void);
+typedef void (* MouseMotionCallback)(int x, int y);
+typedef void (* KeyboardCallback)(unsigned char key, int x, int y);
+typedef void (* MouseCallback)(int button, int state, int x, int y);
 
 class App
 {
@@ -11,18 +14,23 @@ class App
         void run(int argc, char **argv);
         void init(int argc, char **argv);
         void setTitle(std::string title);
-        void setDisplayFunction(callback displayFunction);
-        void setSize(unsigned int width, unsigned int height);
-
-        App();
-        App(std::string title, unsigned int width, unsigned int height);
+        void setMouseFunction(MouseCallback mouseFunction);
+        void setMouseMotionFunction(MouseMotionCallback mouseFunction);
+        void setKeyboardFunction(KeyboardCallback keyboardFunction);
+        void setDisplayFunction(Callback displayFunction);
+        void setSize(size_t width, size_t height);
+//        void render(int primitive, float *color, float **vertex);
+        App(std::string title, size_t width, size_t height);
         virtual ~App();
 
     private:
         char * title;
-        unsigned int width;
-        unsigned int height;
-        callback displayFunction;
+        size_t width;
+        size_t height;
+        Callback displayFunction;
+        MouseCallback mouseFunction;
+        KeyboardCallback keyboardFunction;
+        MouseMotionCallback mouseMotionFunction;
 };
 
 #endif // APP_H
